@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 configurations.all {
     resolutionStrategy {
-        force "com.android.support:support-annotations:${supportLibraryVersion}"
+        force "com.android.support:support-annotations:$supportLibraryVersion"
     }
 }
 
@@ -14,10 +16,10 @@ dependencies {
     implementation 'com.jakewharton:disklrucache:2.0.2'
     implementation 'com.google.android.exoplayer:exoplayer:r2.2.0'
     implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
-    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation "com.android.support:customtabs:${supportLibraryVersion}"
+    implementation "com.android.support:customtabs:$supportLibraryVersion"
     implementation 'commons-io:commons-io:2.5'
     /// dependencies for local unit tests
     testImplementation 'junit:junit:4.12'
@@ -34,7 +36,7 @@ dependencies {
     // UIAutomator - for cross-app UI tests, and to grant screen is turned on in Espresso tests
     androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     // fix conflict in dependencies; see http://g.co/androidstudio/app-test-app-conflict for details
-    androidTestImplementation "com.android.support:support-annotations:${supportLibraryVersion}"
+    androidTestImplementation "com.android.support:support-annotations:$supportLibraryVersion"
     // Image loading
     implementation('com.github.bumptech.glide:glide:4.6.1') {
         exclude group: "com.android.support"
@@ -43,10 +45,32 @@ dependencies {
     //Zooming Android ImageView.
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
+    // WebDAV network library
     implementation 'com.gitlab.ownclouders:dav4android:oc_support'
 
     // Convert Java Objects into JSON and back
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
+    // Architecture lifecycle components
+    implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
+    implementation "android.arch.lifecycle:viewmodel:$archLifecycleVersion"
+    kapt "android.arch.lifecycle:compiler:$archLifecycleVersion"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
+
+    // Coroutines
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    // Testing
+    androidTestImplementation "android.arch.persistence.room:testing:$roomVersion"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "android.arch.core:core-testing:$archLifecycleVersion"
 }
 
 tasks.withType(Test) {
